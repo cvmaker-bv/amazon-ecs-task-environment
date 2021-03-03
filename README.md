@@ -2,6 +2,26 @@
 
 Github Action adding environment variables to a ECS task definition on fly
 
+## Inputs
+
+### `task-definition`
+
+**Required** AWS ECS task definition
+
+### `container-name`
+
+**Required** AWS ECS container where the variables need to be added
+
+### `env-variables`
+
+**Required** Environment variables to inject into the task
+
+## Outputs
+
+### `task-definition`
+
+Updated task definition
+
 ## Usage
 
 ```yaml

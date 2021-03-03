@@ -17,6 +17,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.run = void 0;
 const core_1 = __nccwpck_require__(186);
 const fs_1 = __nccwpck_require__(747);
 const path_1 = __nccwpck_require__(622);
@@ -61,7 +62,10 @@ function run() {
         }
     });
 }
-run();
+exports.run = run;
+if (require.main === require.cache[eval('__filename')]) {
+    run();
+}
 
 
 /***/ }),
