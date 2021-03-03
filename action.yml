@@ -1,0 +1,18 @@
+name: "AWS ECR task definition environment Github Action"
+description: "Add environment variables to task definition on fly"
+inputs:
+  task-definition:
+    description: "AWS ECS task definition"
+    required: true
+  container-name:
+    description: "AWS ECS container where the variables need to be added"
+    required: true
+  env:
+    description: "Environment variables to inject into the task"
+    required: true
+outputs:
+  task-definition:
+    description: "Updated task definition with added environment variables"
+runs:
+  using: "node14"
+  main: "dist/index.js"
