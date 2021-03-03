@@ -7,7 +7,7 @@ inputs:
   container-name:
     description: "AWS ECS container where the variables need to be added"
     required: true
-  env:
+  env-variables:
     description: "Environment variables to inject into the task"
     required: true
 outputs:

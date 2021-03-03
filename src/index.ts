@@ -1,5 +1,6 @@
 import { debug, getInput, setOutput, setFailed } from '@actions/core';
 import { readFileSync, writeFileSync } from 'fs';
+import { isAbsolute, join } from 'path';
 import { fileSync } from 'tmp';
 import { ECS } from 'aws-sdk';
 import { Env } from './types';
@@ -7,9 +8,12 @@ import { Env } from './types';
 async function run(): Promise<void> {
   try {
     debug('START ADDING VARIABLES');
-    const taskPath: string = getInput('task-definition');
-    debug(taskPath);
-    const taskDef: ECS.TaskDefinition = JSON.parse(readFileSync(taskPath).toString());
+    const taskPathValue: string = getInput('task-definition');
+    const taskDefPath = isAbsolute(taskPathValue)
+      ? taskPathValue
+      : join(process.env.GITHUB_WORKSPACE || __dirname, taskPathValue);
+    debug(taskDefPath);
+    const taskDef: ECS.TaskDefinition = JSON.parse(readFileSync(taskDefPath).toString());
     debug(JSON.stringify(taskDef));
 
     if (!taskDef.containerDefinitions) {
@@ -24,11 +28,11 @@ async function run(): Promise<void> {
       throw new Error(`Container ${containerName} is not found in the task definition...`);
     }
 
-    const env: Env = JSON.parse(getInput('container-name'));
+    const envVars: Env = JSON.parse(getInput('env-variables'));
 
     taskDef.containerDefinitions[containerIndex].environment = [
       ...(taskDef.containerDefinitions[containerIndex].environment || []),
-      ...Object.keys(env).map((name) => ({ name, value: env[name] }))
+      ...Object.keys(envVars).map((name) => ({ name, value: envVars[name] }))
     ];
 
     debug(taskDef.toString());
