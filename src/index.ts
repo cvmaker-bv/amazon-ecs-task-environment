@@ -42,7 +42,6 @@ async function run(): Promise<void> {
     });
 
     const newTaskDefContent = JSON.stringify(taskDef, null, 2);
-    console.log('>>>>>>', newTaskDefContent);
     writeFileSync(updatedTaskDefFile.name, newTaskDefContent);
     setOutput('task-definition', updatedTaskDefFile.name);
   } catch (error) {

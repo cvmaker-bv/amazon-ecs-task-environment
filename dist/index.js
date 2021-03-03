@@ -52,7 +52,6 @@ function run() {
                 discardDescriptor: true
             });
             const newTaskDefContent = JSON.stringify(taskDef, null, 2);
-            console.log('>>>>>>', newTaskDefContent);
             fs_1.writeFileSync(updatedTaskDefFile.name, newTaskDefContent);
             core_1.setOutput('task-definition', updatedTaskDefFile.name);
         }
