@@ -6,7 +6,9 @@ import { Env } from './types';
 
 async function run(): Promise<void> {
   try {
+    debug('START ADDING VARIABLES');
     const taskPath: string = getInput('task-definition');
+    debug(taskPath);
     const taskDef: ECS.TaskDefinition = JSON.parse(readFileSync(taskPath).toString());
     debug(JSON.stringify(taskDef));
 
