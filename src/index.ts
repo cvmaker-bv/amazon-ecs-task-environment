@@ -33,8 +33,6 @@ async function run(): Promise<void> {
       ...Object.keys(envVars).map((name) => ({ name, value: envVars[name] }))
     ];
 
-    debug(taskDef.toString());
-
     const updatedTaskDefFile = fileSync({
       tmpdir: process.env.RUNNER_TEMP,
       prefix: 'task-definition-',
@@ -44,6 +42,7 @@ async function run(): Promise<void> {
     });
 
     const newTaskDefContent = JSON.stringify(taskDef, null, 2);
+    console.log('>>>>>>', newTaskDefContent);
     writeFileSync(updatedTaskDefFile.name, newTaskDefContent);
     setOutput('task-definition', updatedTaskDefFile.name);
   } catch (error) {

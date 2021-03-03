@@ -44,7 +44,6 @@ function run() {
                 ...(taskDef.containerDefinitions[containerIndex].environment || []),
                 ...Object.keys(envVars).map((name) => ({ name, value: envVars[name] }))
             ];
-            core_1.debug(taskDef.toString());
             const updatedTaskDefFile = tmp_1.fileSync({
                 tmpdir: process.env.RUNNER_TEMP,
                 prefix: 'task-definition-',
@@ -53,6 +52,7 @@ function run() {
                 discardDescriptor: true
             });
             const newTaskDefContent = JSON.stringify(taskDef, null, 2);
+            console.log('>>>>>>', newTaskDefContent);
             fs_1.writeFileSync(updatedTaskDefFile.name, newTaskDefContent);
             core_1.setOutput('task-definition', updatedTaskDefFile.name);
         }
