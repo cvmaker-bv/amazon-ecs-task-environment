@@ -15,6 +15,7 @@ async function run(): Promise<void> {
     debug(taskDefPath);
     const taskContent = readFileSync(taskDefPath).toString();
     debug(taskContent);
+    debug('END');
     // const taskDef: ECS.TaskDefinition = JSON.parse(taskContent);
     // debug(JSON.stringify(taskDef));
 
