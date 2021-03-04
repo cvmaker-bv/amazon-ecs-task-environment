@@ -5,7 +5,7 @@ import { fileSync } from 'tmp';
 import { ECS } from 'aws-sdk';
 import { Env } from './types';
 
-async function run(): Promise<void> {
+export function run(): void {
   try {
     const taskPathValue: string = getInput('task-definition');
     const taskDefPath = isAbsolute(taskPathValue)
@@ -50,4 +50,6 @@ async function run(): Promise<void> {
   }
 }
 
-run();
+if (require.main === module) {
+  run();
+}

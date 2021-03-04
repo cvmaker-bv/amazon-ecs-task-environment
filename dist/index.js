@@ -3,19 +3,10 @@ require('./sourcemap-register.js');module.exports =
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 822:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.run = void 0;
 const core_1 = __nccwpck_require__(186);
@@ -23,44 +14,42 @@ const fs_1 = __nccwpck_require__(747);
 const path_1 = __nccwpck_require__(622);
 const tmp_1 = __nccwpck_require__(517);
 function run() {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const taskPathValue = core_1.getInput('task-definition');
-            const taskDefPath = path_1.isAbsolute(taskPathValue)
-                ? taskPathValue
-                : path_1.join(process.env.GITHUB_WORKSPACE || __dirname, taskPathValue);
-            const taskContent = fs_1.readFileSync(taskDefPath).toString();
-            const taskDef = JSON.parse(taskContent);
-            if (!taskDef.containerDefinitions) {
-                throw new Error('The task does not have any containers defined...');
-            }
-            const containerName = core_1.getInput('container-name');
-            const containerIndex = taskDef.containerDefinitions
-                .findIndex(({ name }) => name === containerName);
-            if (containerIndex === undefined) {
-                throw new Error(`Container ${containerName} is not found in the task definition...`);
-            }
-            const envVars = JSON.parse(core_1.getInput('env-variables'));
-            taskDef.containerDefinitions[containerIndex].environment = [
-                ...(taskDef.containerDefinitions[containerIndex].environment || []),
-                ...Object.keys(envVars).map((name) => ({ name, value: envVars[name] }))
-            ];
-            const updatedTaskDefFile = tmp_1.fileSync({
-                tmpdir: process.env.RUNNER_TEMP,
-                prefix: 'task-definition-',
-                postfix: '.json',
-                keep: true,
-                discardDescriptor: true
-            });
-            const newTaskDefContent = JSON.stringify(taskDef, null, 2);
-            fs_1.writeFileSync(updatedTaskDefFile.name, newTaskDefContent);
-            core_1.setOutput('task-definition', updatedTaskDefFile.name);
+    try {
+        const taskPathValue = core_1.getInput('task-definition');
+        const taskDefPath = path_1.isAbsolute(taskPathValue)
+            ? taskPathValue
+            : path_1.join(process.env.GITHUB_WORKSPACE || __dirname, taskPathValue);
+        const taskContent = fs_1.readFileSync(taskDefPath).toString();
+        const taskDef = JSON.parse(taskContent);
+        if (!taskDef.containerDefinitions) {
+            throw new Error('The task does not have any containers defined...');
         }
-        catch (error) {
-            core_1.setFailed(error.message);
-            core_1.debug(error.stack);
+        const containerName = core_1.getInput('container-name');
+        const containerIndex = taskDef.containerDefinitions
+            .findIndex(({ name }) => name === containerName);
+        if (containerIndex === undefined) {
+            throw new Error(`Container ${containerName} is not found in the task definition...`);
         }
-    });
+        const envVars = JSON.parse(core_1.getInput('env-variables'));
+        taskDef.containerDefinitions[containerIndex].environment = [
+            ...(taskDef.containerDefinitions[containerIndex].environment || []),
+            ...Object.keys(envVars).map((name) => ({ name, value: envVars[name] }))
+        ];
+        const updatedTaskDefFile = tmp_1.fileSync({
+            tmpdir: process.env.RUNNER_TEMP,
+            prefix: 'task-definition-',
+            postfix: '.json',
+            keep: true,
+            discardDescriptor: true
+        });
+        const newTaskDefContent = JSON.stringify(taskDef, null, 2);
+        fs_1.writeFileSync(updatedTaskDefFile.name, newTaskDefContent);
+        core_1.setOutput('task-definition', updatedTaskDefFile.name);
+    }
+    catch (error) {
+        core_1.setFailed(error.message);
+        core_1.debug(error.stack);
+    }
 }
 exports.run = run;
 if (require.main === require.cache[eval('__filename')]) {
