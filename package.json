@@ -1,0 +1,38 @@
+{
+  "name": "@cvmaker-bv/amazon-ecs-task-environment",
+  "version": "1.0.0",
+  "description": "GitHub Action adding environment variables to AWS ECR task definition on fly",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint src/**/*.ts",
+    "package": "ncc build --source-map --license licenses.txt",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cvmaker-bv/amazon-ecs-task-environment.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cvmaker-bv/amazon-ecs-task-environment/issues"
+  },
+  "homepage": "https://github.com/cvmaker-bv/amazon-ecs-task-environment#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "tmp": "^0.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.31",
+    "@types/tmp": "^0.2.0",
+    "@typescript-eslint/eslint-plugin": "^4.16.1",
+    "@typescript-eslint/parser": "^4.16.1",
+    "@vercel/ncc": "^0.27.0",
+    "aws-sdk": "^2.854.0",
+    "eslint": "^7.21.0",
+    "husky": "^5.1.3",
+    "typescript": "^4.2.2"
+  }
+}
