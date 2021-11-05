@@ -14,7 +14,7 @@
     "type": "git",
     "url": "git+https://github.com/cvmaker-bv/amazon-ecs-task-environment.git"
   },
-  "author": "",
+  "author": "CV Maker B.V.",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/cvmaker-bv/amazon-ecs-task-environment/issues"
